@@ -86,6 +86,12 @@ NSString *selectedPartySize;
     pickerData = @[@"1",@"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    SelectedDateIndex = -1;
+    SelectedTimeIndex = -1;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -165,6 +171,9 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
             _timesOfTheDay = nil;
             [_availableTimeCollectionView reloadData];
         }
+    }
+    else{
+        SelectedTimeIndex = indexPath.row;
     }
 }
 
@@ -247,7 +256,7 @@ numberOfRowsInComponent:(NSInteger)component{
 - (IBAction)btnReserve_TouchUpInside:(id)sender {
     
     //Throw alert messages when Date or Time is not selected, nee to change these to constants for better maintainablility
-    if (!SelectedDateIndex) {
+    if (SelectedDateIndex == -1) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Alert" message:@"Select Date" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
@@ -257,7 +266,7 @@ numberOfRowsInComponent:(NSInteger)component{
         
         return;
     }
-    if (!SelectedTimeIndex) {
+    if (SelectedTimeIndex == -1) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Alert" message:@"Select Time" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
